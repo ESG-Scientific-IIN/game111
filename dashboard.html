@@ -1,0 +1,241 @@
+cat << 'EOF' > dashboard.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Dashboard | Game Center</title>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+    </script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap');
+        :root {
+            --primary: #000000; --secondary: #1a1a1a; --accent: #0066ff; --danger: #ff3366;
+            --success: #10b981; --warning: #f59e0b; --gray-100: #f8f9fa; --gray-200: #e9ecef;
+            --gray-600: #6c757d; --gray-700: #495057; --light-blue: #add8e6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 62.5%; }
+        body {
+            font-family: 'Calibri Light', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300; font-size: 1.4rem; line-height: 1.6; color: var(--primary);
+            background: #ffffff; -webkit-font-smoothing: antialiased;
+        }
+        .dashboard-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+        .sidebar { background: var(--gray-100); border-right: 1px solid var(--gray-200); padding: 2rem 0; }
+        .sidebar-title { font-size: 1rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); padding: 0 2rem; margin-bottom: 1rem; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu a { display: flex; align-items: center; gap: 1.2rem; padding: 0.8rem 2rem; color: var(--gray-700); text-decoration: none; font-size: 1.2rem; transition: all 0.2s ease; }
+        .sidebar-menu a:hover { background: var(--gray-200); color: var(--primary); }
+        .sidebar-menu a.active { background: white; color: var(--primary); border-right: 2px solid var(--accent); }
+        .sidebar-icon { width: 16px; height: 16px; opacity: 0.6; }
+        .main-content { padding: 3rem; background: #fff; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+        .dashboard-title h1 { font-size: 2.4rem; font-weight: 300; margin-bottom: 0.4rem; }
+        .dashboard-subtitle { font-size: 1.2rem; color: var(--gray-600); }
+        .btn-danger { padding: 0.8rem 2rem; font-size: 1.1rem; font-weight: 400; border: 1px solid var(--danger); background: transparent; color: var(--danger); cursor: pointer; transition: all 0.2s ease; }
+        .btn-danger:hover { background: var(--danger); color: white; }
+        .card { background: white; border: 1px solid var(--gray-200); }
+        .card-header { padding: 1.6rem 2rem; border-bottom: 1px solid var(--gray-200); }
+        .card-title { font-size: 1.4rem; font-weight: 400; }
+        .card-body { padding: 2rem; }
+        .game-container { position: relative; background: var(--primary); border: 1px solid var(--gray-200); }
+        .game-canvas { display: block; width: 100%; cursor: none; }
+        .game-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; z-index: 10; }
+        .game-overlay h3 { font-size: 2.8rem; font-weight: 500; }
+        .game-overlay p { font-size: 1.6rem; margin-top: 0.5rem; }
+        .btn { padding: 0.8rem 2rem; font-size: 1.1rem; font-weight: 400; border: 1px solid white; background: transparent; color: white; cursor: pointer; transition: all 0.2s ease; margin-top: 2rem; }
+        .btn:hover { background: white; color: var(--primary); }
+        @media (max-width: 768px) { .dashboard-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Main</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Games</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="#" id="nav-ping-pong"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 5H4v14h16V5zm-8 12H6v-4h6v4zm0-6H6V7h6v4zm8 6h-6v-4h6v4zm0-6h-6V7h6v4z"/></svg>Ping Pong</a></li>
+                    <li><a href="#" id="nav-wall-ball"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>Wall Ball</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <h1 id="welcome-message">Cognitive Dashboard</h1>
+                    <p id="game-subtitle" class="dashboard-subtitle">Select a game from the sidebar to begin.</p>
+                </div>
+                <div class="header-actions"><button id="sign-out-button" class="btn-danger">Sign Out</button></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h3 id="game-title" class="card-title">Game Center</h3></div>
+                <div class="card-body">
+                    <div id="game-board" class="game-container">
+                        <canvas id="game-canvas" class="game-canvas"></canvas>
+                        <div id="game-overlay" class="game-overlay">
+                            <h3>Welcome!</h3>
+                            <p>Select a game to test your skills.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgij7wgkirr2k2pnyspISqeLexXWDSC44",
+            authDomain: "zi-us-login.firebaseapp.com",
+            projectId: "zi-us-login",
+            storageBucket: "zi-us-login.firebasestorage.app",
+            messagingSenderId: "914293517426",
+            appId: "1:914293517426:web:188e7cf98421c70ba3a6eb",
+            measurementId: "G-ZJKG95WP5R"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        let activeGameLoopId = null;
+        onAuthStateChanged(auth, (user) => {
+            if (user) { document.getElementById('welcome-message').textContent = `Welcome, ${user.displayName || user.email}`; } else { window.location.href = 'login.html'; }
+        });
+        document.getElementById('sign-out-button').addEventListener('click', () => { signOut(auth).catch(error => console.error('Sign out error', error)); });
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const overlay = document.getElementById('game-overlay');
+        const gameTitle = document.getElementById('game-title');
+        const gameSubtitle = document.getElementById('game-subtitle');
+        function resizeCanvas() { canvas.width = canvas.clientWidth; canvas.height = canvas.clientWidth > 600 ? 400 : canvas.clientWidth * 0.66; }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        function clearGame() { if (activeGameLoopId) { cancelAnimationFrame(activeGameLoopId); activeGameLoopId = null; } ctx.clearRect(0, 0, canvas.width, canvas.height); canvas.removeEventListener('mousemove', pingPongMovePaddle); canvas.removeEventListener('mousemove', wallBallMovePaddle); }
+        function initPingPong() {
+            clearGame();
+            gameTitle.textContent = "Ping Pong Challenge";
+            gameSubtitle.textContent = "Keep the ball in play. The computer is tough!";
+            overlay.innerHTML = `<h3>Ping Pong Challenge</h3><p>First to 5 points wins. Good luck!</p><button id="start-btn" class="btn">Start Game</button>`;
+            document.getElementById('start-btn').onclick = startPingPong;
+        }
+        let player, computer, ball;
+        function startPingPong() {
+            overlay.style.display = 'none';
+            canvas.addEventListener('mousemove', pingPongMovePaddle);
+            const paddleHeight = 80, paddleWidth = 10;
+            player = { x: 0, y: (canvas.height - paddleHeight) / 2, width: paddleWidth, height: paddleHeight, score: 0 };
+            computer = { x: canvas.width - paddleWidth, y: (canvas.height - paddleHeight) / 2, width: paddleWidth, height: paddleHeight, score: 0 };
+            ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 8, speed: 6, velocityX: 6, velocityY: 6 };
+            pingPongLoop();
+        }
+        function pingPongLoop() { updatePingPong(); renderPingPong(); activeGameLoopId = requestAnimationFrame(pingPongLoop); }
+        function renderPingPong() {
+            ctx.fillStyle = 'var(--primary)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            ctx.fillRect(computer.x, computer.y, computer.width, computer.height);
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+            ctx.fill();
+            ctx.font = '3rem Inter';
+            ctx.fillText(player.score, canvas.width/4, 50);
+            ctx.fillText(computer.score, 3*canvas.width/4, 50);
+        }
+        function updatePingPong() {
+            ball.x += ball.velocityX;
+            ball.y += ball.velocityY;
+            computer.y += ((ball.y - (computer.y + computer.height / 2))) * 0.1;
+            if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) ball.velocityY = -ball.velocityY;
+            let p = (ball.x < canvas.width / 2) ? player : computer;
+            if (collision(ball, p)) {
+                let collidePoint = (ball.y - (p.y + p.height / 2)) / (p.height / 2);
+                let angleRad = (Math.PI / 4) * collidePoint;
+                let direction = (ball.x < canvas.width / 2) ? 1 : -1;
+                ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+                ball.velocityY = ball.speed * Math.sin(angleRad);
+                ball.speed += 0.3;
+            }
+            if (ball.x - ball.radius < 0) { computer.score++; resetPingPongBall(); } else if (ball.x + ball.radius > canvas.width) { player.score++; resetPingPongBall(); }
+            if (player.score === 5 || computer.score === 5) { endPingPong(player.score === 5); }
+        }
+        function endPingPong(playerWon) {
+            cancelAnimationFrame(activeGameLoopId);
+            activeGameLoopId = null;
+            overlay.style.display = 'flex';
+            overlay.innerHTML = `<h3>${playerWon ? 'You Win!' : 'Game Over'}</h3><p>Score: ${player.score} - ${computer.score}</p><button id="restart-btn" class="btn">Play Again</button>`;
+            document.getElementById('restart-btn').onclick = initPingPong;
+        }
+        function resetPingPongBall() { ball.x = canvas.width / 2; ball.y = canvas.height / 2; ball.speed = 6; ball.velocityX = -ball.velocityX; }
+        function pingPongMovePaddle(evt) { let rect = canvas.getBoundingClientRect(); player.y = evt.clientY - rect.top - player.height / 2; }
+        function initWallBall() {
+            clearGame();
+            gameTitle.textContent = "Wall Ball Reflex Test";
+            gameSubtitle.textContent = "Don't let the balls touch the floor!";
+            overlay.innerHTML = `<h3>Wall Ball</h3><p>Keep both balls in the air!</p><button id="start-btn" class="btn">Start Game</button>`;
+            document.getElementById('start-btn').onclick = startWallBall;
+        }
+        let wallBallPaddle, ball1, ball2, wallBallScore;
+        function startWallBall() {
+            overlay.style.display = 'none';
+            canvas.addEventListener('mousemove', wallBallMovePaddle);
+            wallBallPaddle = { x: (canvas.width - 100) / 2, y: canvas.height - 20, width: 100, height: 10 };
+            ball1 = { x: 50, y: 50, radius: 10, dx: 4, dy: 4, color: 'var(--primary)' };
+            ball2 = { x: 150, y: 100, radius: 15, dx: -3, dy: 3, color: 'var(--light-blue)' };
+            wallBallScore = 0;
+            wallBallLoop();
+        }
+        function wallBallLoop() { updateWallBall(); renderWallBall(); activeGameLoopId = requestAnimationFrame(wallBallLoop); }
+        function renderWallBall() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'var(--primary)';
+            ctx.fillRect(wallBallPaddle.x, wallBallPaddle.y, wallBallPaddle.width, wallBallPaddle.height);
+            drawBall(ball1);
+            drawBall(ball2);
+            ctx.fillStyle = 'var(--primary)';
+            ctx.font = '2rem Inter';
+            ctx.fillText(`Score: ${wallBallScore}`, 20, 40);
+        }
+        function drawBall(b) { ctx.beginPath(); ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2); ctx.fillStyle = b.color; ctx.fill(); ctx.closePath(); }
+        function updateWallBall() {
+            [ball1, ball2].forEach(b => {
+                b.x += b.dx; b.y += b.dy;
+                if (b.x + b.radius > canvas.width || b.x - b.radius < 0) b.dx = -b.dx;
+                if (b.y - b.radius < 0) b.dy = -b.dy;
+                if (b.y + b.radius > wallBallPaddle.y && b.x > wallBallPaddle.x && b.x < wallBallPaddle.x + wallBallPaddle.width) { b.dy = -b.dy * 1.05; wallBallScore++; }
+                if (b.y + b.radius > canvas.height) { endWallBall(); }
+            });
+        }
+        function endWallBall() {
+            cancelAnimationFrame(activeGameLoopId);
+            activeGameLoopId = null;
+            overlay.style.display = 'flex';
+            overlay.innerHTML = `<h3>Game Over!</h3><p>Final Score: ${wallBallScore}</p><button id="restart-btn" class="btn">Play Again</button>`;
+            document.getElementById('restart-btn').onclick = initWallBall;
+        }
+        function wallBallMovePaddle(evt) { let rect = canvas.getBoundingClientRect(); wallBallPaddle.x = evt.clientX - rect.left - wallBallPaddle.width / 2; }
+        function collision(b, p) {
+            p.top = p.y; p.bottom = p.y + p.height; p.left = p.x; p.right = p.x + p.width;
+            b.top = b.y - b.radius; b.bottom = b.y + b.radius; b.left = b.x - b.radius; b.right = b.x + b.radius;
+            return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
+        }
+        document.getElementById('nav-ping-pong').addEventListener('click', (e) => { e.preventDefault(); initPingPong(); });
+        document.getElementById('nav-wall-ball').addEventListener('click', (e) => { e.preventDefault(); initWallBall(); });
+    </script>
+</body>
+</html>

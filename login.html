@@ -1,0 +1,109 @@
+cat << 'EOF' > login.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Cognitive Skills Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hidden { display: none; }
+        .toggle-checkbox:checked { right: 0; border-color: #0066ff; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #0066ff; }
+    </style>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+</head>
+<body class="bg-gray-100">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div class="flex items-center justify-center min-h-screen py-12">
+        <div id="login-container" class="w-full max-w-md hidden">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">Sign In or Sign Up</h1>
+                <p class="text-center text-gray-500 mb-6">to access the Cognitive Skills Dashboard</p>
+                <div class="mb-4">
+                    <input type="email" id="email-input" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" id="password-input" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div class="flex gap-2 mt-3">
+                        <button id="email-login-button" class="w-full bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg transition">Sign In</button>
+                        <button id="email-signup-button" class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition">Sign Up</button>
+                    </div>
+                </div>
+                <div class="flex items-center my-6"><hr class="flex-grow border-t border-gray-300"><span class="mx-4 text-gray-500 text-sm">OR</span><hr class="flex-grow border-t border-gray-300"></div>
+                <div class="space-y-3">
+                    <button id="google-login-button" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded-lg flex items-center justify-center transition"><img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5 mr-3"> Sign in with Google</button>
+                    <button id="github-login-button" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center transition"><svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> Sign in with GitHub</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="consent-modal-backdrop" class="hidden fixed inset-0 bg-gray-900 bg-opacity-60 z-40 flex items-center justify-center">
+        <div id="consent-modal" class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-6 transform transition-all scale-95 opacity-0">
+            <h2 class="text-xl font-bold text-gray-800">Your Privacy</h2>
+            <p class="text-sm text-gray-600 mt-2">We use cookies to operate our site and for analytics. You can choose your preferences below.</p>
+            <div class="space-y-4 mt-6">
+                <div class="flex items-center justify-between"><h3 class="font-semibold text-gray-700">Necessary Cookies</h3><div class="relative inline-block w-10 mr-2 align-middle select-none"><input type="checkbox" class="toggle-checkbox" checked disabled><label class="toggle-label"></label></div></div>
+                <div class="flex items-center justify-between">
+                    <div><h3 class="font-semibold text-gray-700">Analytics Cookies</h3><p class="text-xs text-gray-500">Helps us understand game performance and usage.</p></div>
+                    <div class="relative inline-block w-10 mr-2 align-middle select-none"><input type="checkbox" id="analytics-consent" class="toggle-checkbox"><label for="analytics-consent" class="toggle-label"></label></div>
+                </div>
+            </div>
+            <div class="flex items-center justify-end space-x-4 mt-8">
+                <button id="save-consent-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">Save Preferences</button>
+                <button id="accept-all-button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg">Accept All</button>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgij7wgkirr2k2pnyspISqeLexXWDSC44",
+            authDomain: "zi-us-login.firebaseapp.com",
+            projectId: "zi-us-login",
+            storageBucket: "zi-us-login.firebasestorage.app",
+            messagingSenderId: "914293517426",
+            appId: "1:914293517426:web:188e7cf98421c70ba3a6eb",
+            measurementId: "G-ZJKG95WP5R"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const loginContainer = document.getElementById('login-container');
+        const consentBackdrop = document.getElementById('consent-modal-backdrop');
+        const consentModal = document.getElementById('consent-modal');
+        onAuthStateChanged(auth, (user) => {
+            if (user) { window.location.href = 'dashboard.html'; } else { const savedConsent = localStorage.getItem('userConsent'); if (savedConsent) { loginContainer.classList.remove('hidden'); } }
+        });
+        const showConsentModal = () => { consentBackdrop.classList.remove('hidden'); setTimeout(() => consentModal.classList.remove('opacity-0', 'scale-95'), 10); };
+        const hideConsentModal = () => { consentModal.classList.add('opacity-0', 'scale-95'); setTimeout(() => { consentBackdrop.classList.add('hidden'); loginContainer.classList.remove('hidden'); }, 300); };
+        const updateConsent = (consentSettings) => { gtag('consent', 'update', consentSettings); localStorage.setItem('userConsent', JSON.stringify(consentSettings)); hideConsentModal(); };
+        document.getElementById('save-consent-button').addEventListener('click', () => { updateConsent({ 'analytics_storage': document.getElementById('analytics-consent').checked ? 'granted' : 'denied' }); });
+        document.getElementById('accept-all-button').addEventListener('click', () => { document.getElementById('analytics-consent').checked = true; updateConsent({ 'analytics_storage': 'granted', 'ad_storage': 'granted' }); });
+        if (!localStorage.getItem('userConsent')) { showConsentModal(); }
+        const emailInput = document.getElementById('email-input');
+        const passwordInput = document.getElementById('password-input');
+        async function signInWithProvider(provider) { try { await signInWithPopup(auth, provider); } catch (e) { alert(e.message); } }
+        document.getElementById('email-signup-button').addEventListener('click', async () => { try { await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value); } catch (e) { alert(e.message); } });
+        document.getElementById('email-login-button').addEventListener('click', async () => { try { await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value); } catch (e) { alert(e.message); } });
+        document.getElementById('google-login-button').addEventListener('click', () => signInWithProvider(new GoogleAuthProvider()));
+        document.getElementById('github-login-button').addEventListener('click', () => signInWithProvider(new GithubAuthProvider()));
+    </script>
+</body>
+</html>
